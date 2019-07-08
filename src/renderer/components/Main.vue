@@ -158,11 +158,19 @@ export default {
       this.cutAudioValue = [0, 0];
       this.cutAudioMarks = {};
     },
+    // 打开文件或者文件夹
+    openFolder(filepath) {
+      const { shell } = require("electron");
+      shell.openItem(filepath);
+    },
     // 桌面通知
     deskNotification(title, body) {
       let myNotification = new Notification(title, {
         body
       });
+      myNotification.onclick = () => {
+        this.openFolder(this.save);
+      };
     },
     // 消息通知
     msg(msg, type) {
