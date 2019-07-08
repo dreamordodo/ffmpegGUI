@@ -158,6 +158,12 @@ export default {
       this.cutAudioValue = [0, 0];
       this.cutAudioMarks = {};
     },
+    // 桌面通知
+    deskNotification(title, body) {
+      let myNotification = new Notification(title, {
+        body
+      });
+    },
     // 消息通知
     msg(msg, type) {
       this.$message({
@@ -213,7 +219,7 @@ export default {
         },
         finish => {
           this.progress = 0;
-          this.msg("完成", "success");
+          this.deskNotification("转换完成", this.filename);
         },
         error => {
           console.log(error);
@@ -231,7 +237,7 @@ export default {
           this.progress = +progress.percent.toFixed(2);
         })
         .on("end", () => {
-          this.msg("完成", "success");
+          this.deskNotification("转换完成", this.filename);
           this.progress = 0;
         })
         .saveToFile(`${this.save}/${this.filename}${dateNow()}${format}`);
